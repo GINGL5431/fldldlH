@@ -3,233 +3,498 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>制作人介绍</title>
+    <title>云海酒店谋杀案 - 汤底揭秘</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    
-    <!-- 配置Tailwind自定义颜色 -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        gradient1: '#8B5CF6',
-                        gradient2: '#EC4899',
-                        gradient3: '#3B82F6',
-                        gradient4: '#10B981',
-                        gradient5: '#F59E0B',
+                        primary: '#1e3a8a',
+                        secondary: '#3b82f6',
+                        accent: '#f97316',
+                        dark: '#0f172a',
+                        light: '#f8fafc'
                     },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Georgia', 'serif']
+                    }
                 }
             }
         }
     </script>
-    
     <style type="text/tailwindcss">
         @layer utilities {
-            /* 渐变文本工具类 */
-            .text-gradient-1 {
-                background-clip: text;
-                -webkit-background-clip: text;
-                color: transparent;
-                background-image: linear-gradient(135deg, #8B5CF6, #EC4899);
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
             }
-            .text-gradient-2 {
-                background-clip: text;
-                -webkit-background-clip: text;
-                color: transparent;
-                background-image: linear-gradient(135deg, #3B82F6, #10B981);
+            .text-shadow-lg {
+                text-shadow: 0 4px 8px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08);
             }
-            .text-gradient-3 {
-                background-clip: text;
-                -webkit-background-clip: text;
-                color: transparent;
-                background-image: linear-gradient(135deg, #F59E0B, #EF4444);
+            .bg-blur {
+                backdrop-filter: blur(8px);
             }
-            .text-gradient-4 {
-                background-clip: text;
-                -webkit-background-clip: text;
-                color: transparent;
-                background-image: linear-gradient(135deg, #6366F1, #06B6D4);
-            }
-            .text-gradient-5 {
-                background-clip: text;
-                -webkit-background-clip: text;
-                color: transparent;
-                background-image: linear-gradient(135deg, #EC4899, #8B5CF6);
-            }
-            
-            /* 卡片悬停效果 */
-            .producer-card {
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
-            }
-            .producer-card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            }
-            
-            /* 滚动提示动画 */
-            @keyframes bounce {
-                0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-                40% {transform: translateY(-10px);}
-                60% {transform: translateY(-5px);}
-            }
-            .scroll-indicator {
-                animation: bounce 2s infinite;
+            .transition-custom {
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             }
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 font-sans">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
-        <!-- 页面标题 -->
-        <header class="text-center mb-12 mt-8">
-            <h1 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-gradient-1 mb-4">
-                关于我们的团队
-            </h1>
-            <p class="text-gray-600 text-lg">
-                制作人团队介绍（上下滑动浏览）
-            </p>
-            
-            <!-- 滚动提示 -->
-            <div class="mt-8 hidden md:block">
-                <p class="text-gray-500 mb-2 text-sm">向下滑动浏览</p>
-                <i class="fa fa-chevron-down text-gray-400 scroll-indicator"></i>
+<body class="bg-gray-100 font-sans text-gray-800">
+    <!-- 顶部导航栏 -->
+    <header class="fixed w-full bg-white/90 bg-blur shadow-md z-50 transition-custom">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-balance-scale text-primary text-2xl"></i>
+                <h1 class="text-xl md:text-2xl font-bold text-primary">案件揭秘</h1>
             </div>
-        </header>
-        
-        <!-- 制作人卡片容器（上下排列） -->
-        <div class="space-y-8 pb-20">
-            <!-- 制作人 1 -->
-            <div class="producer-card bg-white rounded-2xl p-6 md:p-8 shadow-lg">
-                <h2 class="text-2xl md:text-3xl font-bold text-gradient-1 mb-3">模糊的记忆AI是无解命题</h2>
-                <p class="text-gray-700 mb-4">项目总监</p>
-                <p class="text-gradient-1/90 leading-relaxed">
-                    拥有6年触发器基础，本项目发起人之一。
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="#overview" class="text-gray-600 hover:text-primary transition-custom">案件概述</a>
+                <a href="#suspects" class="text-gray-600 hover:text-primary transition-custom">嫌疑人分析</a>
+                <a href="#solution" class="text-gray-600 hover:text-primary transition-custom">汤底揭秘</a>
+                <a href="#conclusion" class="text-gray-600 hover:text-primary transition-custom">结论</a>
+            </nav>
+            <button class="md:hidden text-gray-600 hover:text-primary" id="menuToggle">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-200 px-4 py-2 shadow-lg">
+            <a href="#overview" class="block py-2 text-gray-600 hover:text-primary">案件概述</a>
+            <a href="#suspects" class="block py-2 text-gray-600 hover:text-primary">嫌疑人分析</a>
+            <a href="#solution" class="block py-2 text-gray-600 hover:text-primary">汤底揭秘</a>
+            <a href="#conclusion" class="block py-2 text-gray-600 hover:text-primary">结论</a>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="relative pt-24 pb-16 md:pt-32 md:pb-24 bg-gradient-to-br from-primary to-dark text-white overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0 bg-[url('https://picsum.photos/id/1067/1200/800')] bg-cover bg-center"></div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-3xl md:text-5xl font-bold mb-6 text-shadow-lg leading-tight">云海酒店谋杀案</h1>
+                <p class="text-xl md:text-2xl opacity-90 mb-8 text-shadow">富婆刘莉死亡真相大揭秘</p>
+                <a href="#solution" class="inline-block bg-accent hover:bg-accent/90 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-custom transform hover:-translate-y-1">
+                    查看汤底 <i class="fa fa-arrow-down ml-2"></i>
+                </a>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-100 to-transparent"></div>
+    </section>
+
+    <!-- 案件概述 -->
+    <section id="overview" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-2xl md:text-3xl font-bold text-primary mb-4">案件概述</h2>
+                    <div class="w-20 h-1 bg-accent mx-auto rounded-full"></div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 transform hover:shadow-xl transition-custom">
+                    <div class="flex items-start mb-6">
+                        <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                            <i class="fa fa-map-marker text-primary text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">案发地点</h3>
+                            <p class="text-gray-600">云海酒店802房间，位于酒店四楼</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start mb-6">
+                        <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                            <i class="fa fa-user text-primary text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">受害者</h3>
+                            <p class="text-gray-600">刘莉，一名富婆，与丈夫李俊一同入住云海酒店</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start">
+                        <div class="bg-primary/10 p-3 rounded-lg mr-4">
+                            <i class="fa fa-medkit text-primary text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2">死亡状况</h3>
+                            <ul class="list-disc list-inside text-gray-600 space-y-1">
+                                <li>身上有多处青紫伤痕</li>
+                                <li>牙齿被人为拔落</li>
+                                <li>身上有几处针孔</li>
+                                <li>指甲中存有他人皮肤组织（经检验是老王的）</li>
+                                <li>脖颈处有勒痕</li>
+                                <li>体内有男性DNA（经检验是周经理的）</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 嫌疑人分析 -->
+    <section id="suspects" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-primary mb-4">嫌疑人分析</h2>
+                <div class="w-20 h-1 bg-accent mx-auto rounded-full"></div>
+                <p class="mt-4 text-gray-600 max-w-2xl mx-auto">警方排查后发现的四名主要嫌疑人及其可疑之处</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <!-- 老王 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden transform hover:-translate-y-2 transition-custom">
+                    <div class="h-48 bg-gray-200 relative">
+                        <img src="https://picsum.photos/id/1012/400/300" alt="老王的模拟画像" class="w-full h-full object-cover">
+                        <div class="absolute top-3 right-3 bg-accent text-white text-sm font-bold px-3 py-1 rounded-full">
+                            嫌疑人
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-primary">老王</h3>
+                        <div class="flex items-center text-sm text-gray-500 mb-4">
+                            <i class="fa fa-clock-o mr-1"></i>
+                            <span>8:33进入酒店，8:35在四楼消失</span>
+                        </div>
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-700 mb-2">关键线索</h4>
+                            <ul class="text-gray-600 text-sm space-y-1">
+                                <li>• 曾深夜跟踪刘莉并被扇耳光</li>
+                                <li>• 放狠话要杀了刘莉</li>
+                                <li>• 携带钳子</li>
+                                <li>• 刘莉指甲中有他的皮肤组织</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 李俊 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden transform hover:-translate-y-2 transition-custom">
+                    <div class="h-48 bg-gray-200 relative">
+                        <img src="https://picsum.photos/id/1025/400/300" alt="李俊的模拟画像" class="w-full h-full object-cover">
+                        <div class="absolute top-3 right-3 bg-accent text-white text-sm font-bold px-3 py-1 rounded-full">
+                            嫌疑人
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-primary">李俊</h3>
+                        <div class="flex items-center text-sm text-gray-500 mb-4">
+                            <i class="fa fa-clock-o mr-1"></i>
+                            <span>7:49进入802，8:26离开酒店</span>
+                        </div>
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-700 mb-2">关键线索</h4>
+                            <ul class="text-gray-600 text-sm space-y-1">
+                                <li>• 刘莉的丈夫，赌鬼且欠债</li>
+                                <li>• 为刘莉购买巨额保险</li>
+                                <li>• 有家庭暴力行为</li>
+                                <li>• 携带安眠药</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 赵婶 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden transform hover:-translate-y-2 transition-custom">
+                    <div class="h-48 bg-gray-200 relative">
+                        <img src="https://picsum.photos/id/1062/400/300" alt="赵婶的模拟画像" class="w-full h-full object-cover">
+                        <div class="absolute top-3 right-3 bg-accent text-white text-sm font-bold px-3 py-1 rounded-full">
+                            嫌疑人
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-primary">赵婶</h3>
+                        <div class="flex items-center text-sm text-gray-500 mb-4">
+                            <i class="fa fa-clock-o mr-1"></i>
+                            <span>8:45进入802后未再出现</span>
+                        </div>
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-700 mb-2">关键线索</h4>
+                            <ul class="text-gray-600 text-sm space-y-1">
+                                <li>• 酒店保洁，有前科</li>
+                                <li>• 曾与刘莉发生争执</li>
+                                <li>• 放狠话要杀了刘莉</li>
+                                <li>• 携带黑色银针</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 周经理 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden transform hover:-translate-y-2 transition-custom">
+                    <div class="h-48 bg-gray-200 relative">
+                        <img src="https://picsum.photos/id/1074/400/300" alt="周经理的模拟画像" class="w-full h-full object-cover">
+                        <div class="absolute top-3 right-3 bg-accent text-white text-sm font-bold px-3 py-1 rounded-full">
+                            嫌疑人
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 text-primary">周经理</h3>
+                        <div class="flex items-center text-sm text-gray-500 mb-4">
+                            <i class="fa fa-clock-o mr-1"></i>
+                            <span>7:30进802，7:45出，8:55再出现</span>
+                        </div>
+                        <div class="mb-4">
+                            <h4 class="font-semibold text-gray-700 mb-2">关键线索</h4>
+                            <ul class="text-gray-600 text-sm space-y-1">
+                                <li>• 多次向刘莉示好被拒</li>
+                                <li>• 案发当晚扶刘莉进电梯</li>
+                                <li>• 手机有可疑对话记录</li>
+                                <li>• 刘莉体内有他的DNA</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 汤底揭秘 -->
+    <section id="solution" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-primary mb-4">汤底揭秘</h2>
+                <div class="w-20 h-1 bg-accent mx-auto rounded-full"></div>
+                <p class="mt-4 text-gray-600 max-w-2xl mx-auto">案件真相与作案过程还原</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto bg-gray-50 rounded-xl shadow-lg p-6 md:p-8 border-l-4 border-primary">
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-primary mb-4 flex items-center">
+                        <i class="fa fa-lightbulb-o mr-2 text-accent"></i>
+                        案件真相
+                    </h3>
+                    <p class="text-gray-700 leading-relaxed mb-4">
+                        这起案件是由刘莉的丈夫李俊精心策划的谋杀案，目的是为了骗取巨额保险金来偿还他的赌债。李俊利用了其他嫌疑人对刘莉的怨恨，通过各种手段让他们卷入其中，制造混乱，掩盖自己的罪行。
+                    </p>
+                    <p class="text-gray-700 leading-relaxed">
+                        周经理是李俊的帮凶，受其指使参与了案件。老王和赵婶则是因为个人恩怨对刘莉实施了伤害行为，但并非最终致其死亡的直接凶手。
+                    </p>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-primary mb-4 flex items-center">
+                        <i class="fa fa-clock-o mr-2 text-accent"></i>
+                        作案过程还原
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex">
+                            <div class="flex flex-col items-center mr-4">
+                                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">1</div>
+                                <div class="w-0.5 h-full bg-gray-300 mt-2"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-1">周经理的初步行动</h4>
+                                <p class="text-gray-600">
+                                    7:30，周经理受李俊指使，将已被下药的刘莉扶进802房间，并对其实施了侵犯（留下DNA证据），7:45离开房间。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex flex-col items-center mr-4">
+                                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">2</div>
+                                <div class="w-0.5 h-full bg-gray-300 mt-2"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-1">李俊的家暴与下药</h4>
+                                <p class="text-gray-600">
+                                    7:49，李俊进入802房间，对刘莉实施家暴（造成青紫伤痕），并给她服用了安眠药以确保其失去反抗能力，8:26离开酒店，制造不在场证明。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex flex-col items-center mr-4">
+                                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">3</div>
+                                <div class="w-0.5 h-full bg-gray-300 mt-2"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-1">老王的报复行为</h4>
+                                <p class="text-gray-600">
+                                    8:33，老王跟踪刘莉进入酒店，乘坐电梯到四楼，8:35进入802房间。因之前的恩怨，他对刘莉实施暴力，用钳子拔落其牙齿（造成相关伤痕），刘莉在挣扎中抓伤了他（留下皮肤组织证据）。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex flex-col items-center mr-4">
+                                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">4</div>
+                                <div class="w-0.5 h-full bg-gray-300 mt-2"></div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-1">赵婶的伤害行为</h4>
+                                <p class="text-gray-600">
+                                    8:45，赵婶进入802房间，因之前的争执用携带的黑色银针扎伤刘莉（造成针孔），之后留在房间内。
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex flex-col items-center mr-4">
+                                <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">5</div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-lg mb-1">周经理的致命一击</h4>
+                                <p class="text-gray-600">
+                                    8:55，周经理再次返回802房间，为了完成李俊的指示（确保刘莉死亡以骗取保险金），对已经重伤的刘莉实施勒颈，造成其最终死亡（脖颈处勒痕）。他手机中"人已经给你弄好了，记得给我打钱"的信息正是发给李俊的。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold text-primary mb-4 flex items-center">
+                        <i class="fa fa-puzzle-piece mr-2 text-accent"></i>
+                        证据链分析
+                    </h3>
+                    <ul class="list-disc list-inside text-gray-600 space-y-2">
+                        <li>刘莉身上的青紫伤痕与李俊的家暴行为吻合</li>
+                        <li>牙齿被拔落与老王携带的钳子吻合</li>
+                        <li>针孔与赵婶携带的黑色银针吻合</li>
+                        <li>指甲中的皮肤组织证实老王与刘莉发生过肢体冲突</li>
+                        <li>体内的男性DNA证实周经理对刘莉实施了侵犯</li>
+                        <li>脖颈处的勒痕是最终致命伤，由周经理造成</li>
+                        <li>周经理的手机信息证实了他与李俊的合谋关系</li>
+                        <li>李俊是巨额保险的受益人，具有强烈的作案动机</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 结论 -->
+    <section id="conclusion" class="py-16 bg-gradient-to-br from-primary/90 to-dark text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-2xl md:text-3xl font-bold mb-6">案件结论</h2>
+                <div class="w-20 h-1 bg-accent mx-auto rounded-full mb-8"></div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 md:p-8 mb-8">
+                    <p class="text-lg leading-relaxed mb-4">
+                        经过详细调查和证据分析，警方最终认定这是一起有预谋的谋杀案。
+                    </p>
+                    <p class="text-lg leading-relaxed">
+                        李俊作为主谋，为骗取保险金策划了整个案件；周经理作为帮凶，实施了侵犯和最终的致命行为；老王和赵婶因个人恩怨对刘莉实施了伤害，均需承担相应的法律责任。
+                    </p>
+                </div>
+                
+                <div class="flex justify-center">
+                    <a href="#" class="inline-flex items-center bg-white text-primary hover:bg-gray-100 font-semibold px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-custom transform hover:-translate-y-1">
+                        <i class="fa fa-arrow-up mr-2"></i> 返回顶部
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <div class="flex justify-center items-center space-x-2 mb-4">
+                    <i class="fa fa-balance-scale text-accent text-xl"></i>
+                    <h2 class="text-xl font-bold">云海酒店谋杀案 - 汤底揭秘</h2>
+                </div>
+                <p class="text-gray-400 text-sm">
+                    本网站仅用于展示案件推理结果，内容为虚构创作
                 </p>
-            </div>
-            
-            <!-- 制作人 2 -->
-            <div class="producer-card bg-white rounded-2xl p-6 md:p-8 shadow-lg">
-                <h2 class="text-2xl md:text-3xl font-bold text-gradient-2 mb-3">巫马蜜桔</h2>
-                <p class="text-gray-700 mb-4">项目副总监</p>
-                <p class="text-gradient-2/90 leading-relaxed">
-                    建筑，触发器，调试，本项目发起人之一。
-                </p>
-            </div>
-            
-            <!-- 制作人 3 -->
-            <div class="producer-card bg-white rounded-2xl p-6 md:p-8 shadow-lg">
-                <h2 class="text-2xl md:text-3xl font-bold text-gradient-3 mb-3">难言</h2>
-                <p class="text-gray-700 mb-4">思想设计</p>
-                <p class="text-gradient-3/90 leading-relaxed">
-                    地图思想功能设计，材料设计。
-                </p>
-            </div>
-            
-            <!-- 制作人 4 -->
-            <div class="producer-card bg-white rounded-2xl p-6 md:p-8 shadow-lg">
-                <h2 class="text-2xl md:text-3xl font-bold text-gradient-4 mb-3">乌萨奇</h2>
-                <p class="text-gray-700 mb-4">资金股东</p>
-                <p class="text-gradient-4/90 leading-relaxed">
-                    提供地图资金内容，赞助。
-                </p>
-            </div>
-            
-            <!-- 制作人 5 -->
-            <div class="producer-card bg-white rounded-2xl p-6 md:p-8 shadow-lg">
-                <h2 class="text-2xl md:text-3xl font-bold text-gradient-5 mb-3">小染子</h2>
-                <p class="text-gray-700 mb-4">反馈客服</p>
-                <p class="text-gradient-5/90 leading-relaxed">
-                    地图客服，收集地图的任何bug，问题等。
-                </p>
-            </div>
-            
-            <!-- 制作人 6 -->
-            <div class="producer-card bg-white rounded-2xl p-6 md:p-8 shadow-lg">
-                <h2 class="text-2xl md:text-3xl font-bold text-gradient-1 mb-3">赵伟</h2>
-                <p class="text-gray-700 mb-4">前端工程师</p>
-                <p class="text-gradient-1/90 leading-relaxed">
-                    资深前端开发工程师，擅长构建直观易用的用户界面。负责项目可视化展示与交互设计，让复杂的AI技术以友好的方式呈现。
-                </p>
-            </div>
-            
-            <!-- 制作人 7 -->
-            <div class="producer-card bg-white rounded-2xl p-6 md:p-8 shadow-lg">
-                <h2 class="text-2xl md:text-3xl font-bold text-gradient-2 mb-3">空白</h2>
-                <p class="text-gray-700 mb-4">思想设计</p>
-                <p class="text-gradient-2/90 leading-relaxed">
-                    思想地图功能设计，提出有效意见。
-                </p>
-            </div>
-            
-            <!-- 制作人 8 -->
-            <div class="producer-card bg-white rounded-2xl p-6 md:p-8 shadow-lg">
-                <h2 class="text-2xl md:text-3xl font-bold text-gradient-3 mb-3">L</h2>
-                <p class="text-gray-700 mb-4">后端玩家管理</p>
-                <p class="text-gradient-3/90 leading-relaxed">
-                    后端系统玩家管理，负责交流群管理等。
-                </p>
-            </div>
-            
-            <!-- 制作人 9 -->
-            <div class="producer-card bg-white rounded-2xl p-6 md:p-8 shadow-lg">
-                <h2 class="text-2xl md:text-3xl font-bold text-gradient-4 mb-3">史</h2>
-                <p class="text-gray-700 mb-4">技术顾问</p>
-                <p class="text-gradient-4/90 leading-relaxed">
-                    负责图片转为2d像素。
-                </p>
-            </div>
-            
-            <!-- 制作人 10 -->
-            <div class="producer-card bg-white rounded-2xl p-6 md:p-8 shadow-lg">
-                <h2 class="text-2xl md:text-3xl font-bold text-gradient-5 mb-3">0312</h2>
-                <p class="text-gray-700 mb-4">玩家指导</p>
-                <p class="text-gradient-5/90 leading-relaxed">
-                    指导玩家游戏内容，兼玩家管理。
+                <div class="mt-6 flex justify-center space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition-custom">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-custom">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-custom">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-custom">
+                        <i class="fa fa-linkedin"></i>
+                    </a>
+                </div>
+                <p class="text-gray-500 text-xs mt-6">
+                    &copy; 2023 案件推理展示网站 | 版权所有
                 </p>
             </div>
         </div>
-        
-        <!-- 回到顶部按钮 -->
-        <button id="backToTop" class="fixed bottom-8 right-8 bg-gradient-to-r from-gradient1 to-gradient2 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300 hover:scale-110">
-            <i class="fa fa-chevron-up"></i>
-        </button>
-    </div>
+    </footer>
 
+    <!-- JavaScript -->
     <script>
-        // 回到顶部按钮功能
-        const backToTopBtn = document.getElementById('backToTop');
-        
-        // 监听滚动事件
-        window.addEventListener('scroll', () => {
-            // 当滚动超过300px时显示回到顶部按钮
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.remove('opacity-0', 'invisible');
-                backToTopBtn.classList.add('opacity-100', 'visible');
-            } else {
-                backToTopBtn.classList.remove('opacity-100', 'visible');
-                backToTopBtn.classList.add('opacity-0', 'invisible');
-            }
+        // 移动端菜单切换
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
         });
         
-        // 回到顶部点击事件
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        // 平滑滚动支持
+        // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                
+                // 关闭移动菜单（如果打开）
+                document.getElementById('mobileMenu').classList.add('hidden');
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                    return;
+                }
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
             });
+        });
+        
+        // 滚动时改变导航栏样式
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('py-2', 'shadow-lg');
+                header.classList.remove('py-3', 'shadow-md');
+            } else {
+                header.classList.add('py-3', 'shadow-md');
+                header.classList.remove('py-2', 'shadow-lg');
+            }
+        });
+        
+        // 元素进入视口时添加动画
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-4');
+                }
+            });
+        }, observerOptions);
+        
+        // 对所有section应用动画
+        document.querySelectorAll('section > div > div').forEach(section => {
+            section.classList.add('transition-custom', 'duration-700', 'opacity-0', 'translate-y-4');
+            observer.observe(section);
         });
     </script>
 </body>
 </html>
-    
